@@ -103,17 +103,17 @@
     <link rel="icon" type="image/svg" href="https://upload.wikimedia.org/wikipedia/commons/b/b6/Wappen_Schaffhausen_matt.svg" />
 </svelte:head>
 
-<div class="p-4 mx-auto max-w-5xl flex justify-between items-center">
+<div class="p-4 mx-auto max-w-5xl flex justify-between items-center flex-col md:flex-row gap-6">
     <div class="flex gap-2 items-center">
         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Wappen_Schaffhausen_matt.svg" alt="" class="h-14" />
 
         <div>
-            <a href="/" class="tracking-widest text-2xl no-underline">Politiklandschaft von Schaffhausen</a>
+            <a href="/" class="tracking-wide md:tracking-widest text-2xl no-underline">Politiklandschaft von Schaffhausen</a>
             <div class="opacity-50">Anmerkungen an <a href="mailto:info@maximmaeder.com" class="underline">info@maximmaeder.com</a></div>
         </div>
     </div>
 
-    <div class="{base + "/" == $page.url.pathname ? '': 'hidden'}">
+    <div class="{base + "/" == $page.url.pathname ? '': 'hidden'} w-full md:w-[unset]">
         <Label>
             <div>Stichtag</div>
             <Select class="mt-1" items="{days}" bind:value="{$selectedDate}"></Select>

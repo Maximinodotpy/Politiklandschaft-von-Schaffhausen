@@ -11,4 +11,4 @@
 </svelte:head>
 
 <div>{ category }</div>
-<h1 class="uppercase tracking-widest text-4xl mb-8">{ title }</h1>
+<h1 class="uppercase tracking-wide md:tracking-widest text-4xl mb-8">{ title }</h1>
