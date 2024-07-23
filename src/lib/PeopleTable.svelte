@@ -14,6 +14,7 @@
     export let searchTerm: string = '';
     export let hideParty: boolean = false;
     export let hidePlace: boolean = true;
+    export let hideSearch: boolean = false;
     
     $: femaleToMaleRatio = getFemaletoMaleRatio(data);
     $: filteredData = data.filter(person => {
@@ -31,7 +32,7 @@
 
 </script>
 
-<TableSearch placeholder="Suchen" hoverable={true} bind:inputValue={searchTerm} divClass="border">
+<TableSearch placeholder="Suchen" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }">
     <caption class="px-5 pb-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
         Infos zu dieser Tabelle
         <div class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -50,7 +51,7 @@
         <TableHeadCell class="hidden md:table-cell">Aufgaben</TableHeadCell>
         <TableHeadCell class="hidden md:table-cell">Seit</TableHeadCell>
         <TableHeadCell class="hidden md:table-cell">Bild</TableHeadCell>
-        <TableHeadCell class="hidden md:table-cell">G</TableHeadCell>
+        <!-- <TableHeadCell class="hidden md:table-cell">G</TableHeadCell> -->
     </TableHead>
     <TableBody>
         {#each filteredData as person}
@@ -68,7 +69,7 @@
                         <img src={person.image} width="70" alt={person.firstname + " " + person.lastname} />
                     </a>
                 </TableBodyCell>
-                <TableBodyCell class="hidden md:table-cell">{person.gender ?? ''}</TableBodyCell>
+                <!-- <TableBodyCell class="hidden md:table-cell">{person.gender ?? ''}</TableBodyCell> -->
             </TableBodyRow>
         {/each}
     </TableBody>

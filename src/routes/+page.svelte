@@ -75,13 +75,17 @@
     </div>
 </div>
 
-<div class="mt-20">
+<div class="mt-20 grid gap-8">
     <a class="text-xl text-center block bg-blue-100 hover:bg-blue-50 transition-all py-10 no-underline" href="{base}/analyse">
         <div class="inline font-bold">{ $allPeople.length }</div> Personen in <div class="inline font-bold">{$gemeindenlistData.length}</div> Gemeinden und <div class="inline font-bold">{$partieslistData.length}</div> Parteien.
         
         Davon sind <div class="inline font-bold">{$allPeople.filter(person => person.gender == 'M').length}</div> Männlich und <div class="inline font-bold">{$allPeople.filter(person => person.gender == 'F').length}</div> Weiblich.
 
         <div class="font-bold mt-4">Zur Analyse -></div>
+    </a>
+    
+    <a class="text-xl text-center block bg-yellow-100 hover:bg-yellow-50 transition-all py-10 no-underline" href="{base}/suchen">
+        <div class="text-3xl tracking-widest">Suchen</div>
     </a>
 
     <div class="my-20">
