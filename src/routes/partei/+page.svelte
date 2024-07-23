@@ -5,7 +5,10 @@
     import {
         allPeopleGroupedByParty,
         partiesMatchedWithWhereTheyAreRepresentedLegaslitativaly,
-        partiesMatchedWithWhereTheyAreRepresentedExekutivaly
+        partiesMatchedWithWhereTheyAreRepresentedExekutivaly,
+
+        type PersonData
+
     } from "$lib/index";
     import PeopleTable from "$lib/PeopleTable.svelte";
     import CommunityList from "$lib/CommunityList.svelte";
@@ -13,32 +16,48 @@
 
     let partyName = $page.url.searchParams.get("p") as string;
 
-    let thisParty = $allPeopleGroupedByParty[partyName];
+    let thisParty: PersonData[] = [];
+
+    let noSuchParty = false;
+
+    allPeopleGroupedByParty.subscribe((data) => {
+        if (partyName in data) {
+            thisParty = data[partyName];
+            noSuchParty = false;
+        } else {
+            noSuchParty = true;
+        }
+    });
 </script>
 
-<PageTitle title={partyName} category="Partei" />
+{#if noSuchParty}
+    <p>Es gibt keine Partei mit dem Namen "{partyName}"</p>
 
-{#if !(partyName in $allPeopleGroupedByParty) || thisParty?.length == 0}
-    <p>Daten werden geladen ...</p>
+    <p>Zurück zur <a href="/">Homepage</a></p>
 {:else}
-    <div class="mb-20">
-        <h2 class="tracking-widest text-2xl mb-4">Alle Personen in dieser Partei ({thisParty?.length})</h2>
-
-        <PeopleTable data={thisParty} hideParty={true} />
-    </div>
-
-    <div class="grid grid-cols-2 gap-4">
+    <PageTitle title={partyName} category="Partei" />
+    
+    {#if !(partyName in $allPeopleGroupedByParty) || thisParty?.length == 0}
+        <p>Daten werden geladen ...</p>
+    {:else}
         <div class="mb-20">
-            <h2 class="tracking-widest text-2xl mb-4">Vertreten in Folgenden Exekutiven</h2>
-        
-            <CommunityList communities={$partiesMatchedWithWhereTheyAreRepresentedExekutivaly[partyName]} />
+            <h2 class="tracking-widest text-2xl mb-4">Alle Personen in dieser Partei ({thisParty?.length})</h2>
+    
+            <PeopleTable data={thisParty} hideParty={true} />
         </div>
-        
-        <div class="mb-20">
-            <h2 class="tracking-widest text-2xl mb-4">Vertreten in Folgenden Legislativen</h2>
-        
-            <CommunityList communities={$partiesMatchedWithWhereTheyAreRepresentedLegaslitativaly[partyName]} />
+    
+        <div class="grid grid-cols-2 gap-4">
+            <div class="mb-20">
+                <h2 class="tracking-widest text-2xl mb-4">Vertreten in Folgenden Exekutiven</h2>
+            
+                <CommunityList communities={$partiesMatchedWithWhereTheyAreRepresentedExekutivaly[partyName]} />
+            </div>
+            
+            <div class="mb-20">
+                <h2 class="tracking-widest text-2xl mb-4">Vertreten in Folgenden Legislativen</h2>
+            
+                <CommunityList communities={$partiesMatchedWithWhereTheyAreRepresentedLegaslitativaly[partyName]} />
+            </div>
         </div>
-    </div>
+    {/if}
 {/if}
-
