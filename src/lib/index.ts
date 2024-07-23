@@ -27,12 +27,17 @@ export interface Data {
     [key: string]: GroupData;
 }
 
-export const dates = [
-    '2024-07-19',
-    '2024-07-20',
-    '2024-07-21',
-    '2024-07-22',
-]
+// Get all files in folder Statis/Data
+const files = import.meta.glob("../../static/Data/*.xlsx")
+
+// get all dates from the files by using a regex that matches this YYYY-MM-DD
+export const dates = Object.keys(files).map((key) => {
+    const match = key.match(/(\d{4}-\d{2}-\d{2})/);
+    if (match) {
+        return match[1];
+    }
+    return null;
+})
 
 export const selectedDate = writable(dates[dates.length - 1]);
 

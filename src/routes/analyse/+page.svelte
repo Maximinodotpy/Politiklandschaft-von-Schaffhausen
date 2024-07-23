@@ -41,7 +41,7 @@
 
 <!-- Exekutiven die nur aus Männern oder Frauen bestehen -->
 
-<div class="grid grid-cols-3 gap-8">
+<div class="grid md:grid-cols-3 gap-8">
     <div>
         <ListTitle title="Exekutiven mit nur Männern" />
         <GroupList groups={exekutivenMitNurMännern} />

@@ -98,6 +98,9 @@
 
 <svelte:head>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg" href="https://upload.wikimedia.org/wikipedia/commons/b/b6/Wappen_Schaffhausen_matt.svg" />
 </svelte:head>
 
 <div class="p-4 mx-auto max-w-5xl flex justify-between items-center">
