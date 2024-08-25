@@ -61,12 +61,27 @@
             y: count
         })
     }
+
+    const gemeindenWoEinVornameMehrAlsEinmalVorkommt = $exikutivenlistData.filter(exekutive => {
+        let people = $globalData[exekutive].people
+        let names = people.map(person => person.firstname)
+        let namesSet = new Set(names)
+        return names.length != namesSet.size
+    })
+
+    const gemeindenWoEinNachnameMehrAlsEinmalVorkommt = $exikutivenlistData.filter(exekutive => {
+        let people = $globalData[exekutive].people
+        let names = people.map(person => person.lastname)
+        let namesSet = new Set(names)
+        return names.length != namesSet.size
+    })
+
+    console.log(gemeindenWoEinVornameMehrAlsEinmalVorkommt, 'fas');
 </script>
 
 <PageTitle title="Analyse" />
 
 <!-- Exekutiven die nur aus Männern oder Frauen bestehen -->
-
 <div class="grid md:grid-cols-3 gap-8">
     <div class="bg-neutral-50 p-8 border">
         <ListTitle title="Exekutiven mit nur Männern" />
@@ -81,6 +96,16 @@
     <div class="bg-neutral-50 p-8 border">
         <ListTitle title="Exekutiven mit einer geraden Anzahl Rätinnen und Räten" />
         <GroupList groups={exekutivenMitGeraderAnzahlRätinnenUndRäten} />
+    </div>
+
+    <div class="bg-neutral-50 p-8 border">
+        <ListTitle title="Exekutiven wo es mehrere Menschen mit dem gleichen Vornamen hat" />
+        <GroupList groups={gemeindenWoEinVornameMehrAlsEinmalVorkommt} />
+    </div>
+
+    <div class="bg-neutral-50 p-8 border">
+        <ListTitle title="Exekutiven wo es mehrere Menschen mit dem gleichen Nachnamen hat" />
+        <GroupList groups={gemeindenWoEinNachnameMehrAlsEinmalVorkommt} />
     </div>
 
     <div class="bg-neutral-50 p-8 border">

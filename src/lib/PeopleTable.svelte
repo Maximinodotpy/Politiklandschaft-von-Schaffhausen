@@ -32,7 +32,9 @@
     }
 
     function downloadAsCSV() {
-        const csv = data.map(row => Object.values(row).join(",")).join("\n");
+        let csv = data.map(row => Object.values(row).join(";")).join("\n");
+        // Add header row
+        csv = Object.keys(data[0]).join(";") + "\n" + csv;
         const blob = new Blob([csv], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');

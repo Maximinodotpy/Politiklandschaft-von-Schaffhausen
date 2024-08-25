@@ -25,14 +25,14 @@
 <PageTitle title="Politiklandschaft von Schaffhausen" />
 
 <div class="mb-8">
-    <p class="mb-4">Auf dieser Website finden sie Informationen zu den Mandatsträgerinnen und Trägern der Kommunal und Kantonal Ebenen in der Exekutive und Legislative im Kanton Schaffhausen. Die Daten sind von den Websiten der Gemeinden und werden hier gebündelt in dieser <a href="/Data/Daten_{$selectedDate}.xlsx" target="_blank">Excel Datei</a>.</p>
+    <p class="mb-4">Auf dieser Website finden sie Informationen zu den Mandatsträgerinnen und Trägern der Kommunal Ebene in der Exekutive und Legislative im Kanton Schaffhausen. Die Daten sind von den Websiten der Gemeinden und werden hier gebündelt in dieser <a href="/Data/Daten_{$selectedDate}.xlsx" target="_blank">Excel Datei</a>.</p>
     <div>
         <p class="mb-2">Notizen zu den Daten</p>
 
         <ul class="list-disc list-inside">
             <li>Stichtag der Daten ist der { moment($selectedDate).format('DD. MMMM YYYY') }. Man kann aber oben rechts auch einen anderen Tag auswählen.</li>
-            <li>Die Bilder wurden nur entnommen wenn sie nicht als Data URL eingebettet waren.</li>
-            <li>Die Daten entstammen den Websiten der Gemeinden und es wurde nur das Geschlecht der jeweiligen Personen angenommen. Falls keine Partei genannt wurde, findet man diese Info auch nicht hier.</li>
+            <li>Die Bilder wurden nur entnommen wenn sie nicht als <a href="https://de.wikipedia.org/wiki/Data-URL" target="_blank">Data URL</a> eingebettet waren.</li>
+            <li>Die Daten entstammen den Websiten der Gemeinden und es wurde nur das Geschlecht der jeweiligen Personen anhand vom Namen und/oder dem Bild angenommen. Falls keine Partei genannt wurde, findet man diese Info auch nicht hier.</li>
         </ul>
     </div>
 </div>
