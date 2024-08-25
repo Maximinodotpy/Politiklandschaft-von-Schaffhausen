@@ -43,7 +43,7 @@
         <div class="mb-20">
             <h2 class="tracking-widest text-2xl mb-4">Alle Personen in dieser Partei ({thisParty?.length})</h2>
     
-            <PeopleTable data={thisParty} hideParty={true} />
+            <PeopleTable data={thisParty} hideParty={true} tableName={partyName} />
         </div>
     
         <div class="grid grid-cols-2 gap-4">

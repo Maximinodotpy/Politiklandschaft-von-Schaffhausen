@@ -13,4 +13,4 @@
     ({data?.type} auf {data?.layer} Ebene) ({data?.people?.length} Personen)
 </h2>
 
-<PeopleTable data={data?.people} />
+<PeopleTable data={data?.people} tableName="{data.name}" />

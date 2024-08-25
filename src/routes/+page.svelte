@@ -149,6 +149,20 @@
                     <div class="opacity-50 inline-block">
                         von
                         {$allPeople.length}
+
+                        <a href="/galerie" class="no-underline">↗️</a>
+                    </div>
+                </TableBodyCell>
+            </TableBodyRow>
+            <TableBodyRow>
+                <TableBodyCell>E-Mails</TableBodyCell>
+                <TableBodyCell>
+                    {$allPeople.filter(person => person.email).length}
+                    <div class="opacity-50 inline-block">
+                        von
+                        {$allPeople.length}
+
+                        <a href="/kontakt" class="no-underline">↗️</a>
                     </div>
                 </TableBodyCell>
             </TableBodyRow>

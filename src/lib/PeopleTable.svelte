@@ -15,6 +15,7 @@
     export let hideParty: boolean = false;
     export let hidePlace: boolean = true;
     export let hideSearch: boolean = false;
+    export let tableName: string = 'Personen';
     
     $: femaleToMaleRatio = getFemaletoMaleRatio(data);
     $: filteredData = data.filter(person => {
@@ -30,17 +31,49 @@
         }
     }
 
+    function downloadAsCSV() {
+        const csv = data.map(row => Object.values(row).join(",")).join("\n");
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${tableName}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }
+
+    function downloadAsJSON() {
+        const json = JSON.stringify(data, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${tableName}.json`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }
 </script>
 
 <TableSearch placeholder="Suchen" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }">
     <caption class="px-5 pb-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-        Infos zu dieser Tabelle
-        <div class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
-            <ul class="grid md:grid-cols-6 grid-cols-3">
-                <li>{femaleToMaleRatio.male} Männer</li>
-                <li>{femaleToMaleRatio.female} Frauen</li>
-                <li>{Math.round(femaleToMaleRatio.female/femaleToMaleRatio.count*100)}% Frauen</li>
-            </ul>
+        Zu dieser Tabelle
+        <div class="grid grid-cols-2">
+            <div class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
+                <ul class="grid md:grid-cols-6 grid-cols-3">
+                    <li>{femaleToMaleRatio.male} Männer</li>
+                    <li>{femaleToMaleRatio.female} Frauen</li>
+                    <li>{Math.round(femaleToMaleRatio.female/femaleToMaleRatio.count*100)}% Frauen</li>
+                </ul>
+            </div>
+            <div class="flex gap-3 items-center">
+                Herunterladen als
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" on:click={downloadAsCSV}>
+                    CSV
+                </button>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" on:click={downloadAsJSON}>
+                    JSON
+                </button>
+            </div>
         </div>
     </caption>
     <TableHead>
