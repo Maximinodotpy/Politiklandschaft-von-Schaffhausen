@@ -11,6 +11,7 @@ export interface PersonData {
     since: string;
     tasks: string;
     gender: string;
+    email: string;
 }
 
 export interface GroupData {

@@ -49,6 +49,8 @@
             const sheet = XLSX.utils.sheet_to_json(worksheet, {
                 header: 1
             }) as string[][];
+
+            console.log("Sheet", sheet);
     
             let new_data: GroupData = {
                 name: sheetName,
@@ -56,6 +58,7 @@
                 type: sheet[2][1],
                 layer: sheet[3][1],
                 place: sheet[4][1],
+                email: sheet[1][6],
                 people: []
             };
     
@@ -73,7 +76,8 @@
                     since: row[4],
                     tasks: row[5],
                     image: row[6],
-                    gender: row[7]
+                    gender: row[7],
+                    email: row[8],
                 });
             }
     

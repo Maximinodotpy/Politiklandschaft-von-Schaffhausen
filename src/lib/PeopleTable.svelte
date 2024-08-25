@@ -51,6 +51,7 @@
         <TableHeadCell class="hidden md:table-cell">Aufgaben</TableHeadCell>
         <TableHeadCell class="hidden md:table-cell">Seit</TableHeadCell>
         <TableHeadCell class="hidden md:table-cell">Bild</TableHeadCell>
+        <TableHeadCell class="hidden md:table-cell">Kontakt</TableHeadCell>
         <!-- <TableHeadCell class="hidden md:table-cell">G</TableHeadCell> -->
     </TableHead>
     <TableBody>
@@ -68,6 +69,11 @@
                     <a href="{person.image}" target="_blank" class="text-xs">
                         <img src={person.image} width="70" alt={person.firstname + " " + person.lastname} />
                     </a>
+                </TableBodyCell>
+                <TableBodyCell class="hidden md:table-cell">
+                    {#if person.email}
+                        <a class="no-underline block p-4w" href="mailto:{person.email ?? ''}">✉️</a>
+                    {/if}
                 </TableBodyCell>
                 <!-- <TableBodyCell class="hidden md:table-cell">{person.gender ?? ''}</TableBodyCell> -->
             </TableBodyRow>
