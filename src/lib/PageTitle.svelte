@@ -4,11 +4,18 @@
 
     export let category = "";
 
+    export let trackingClasses = 'tracking-wide md:tracking-widest'
+
 </script>
 
 <svelte:head>
     <title>{title} | Politiklandschaft von Schaffhausen</title>
 </svelte:head>
 
-<div>{ category }</div>
-<h1 class="uppercase tracking-wide md:tracking-widest text-4xl mb-8">{ title }</h1>
+<div class="mb-8">
+    <div>{ category }</div>
+    <h1 class="uppercase {trackingClasses} md:text-4xl text-2xl">
+        <slot name="title">{ title }</slot>
+    </h1>
+    <slot name="below"></slot>
+</div>

@@ -22,7 +22,21 @@
     import PageTitle from "$lib/PageTitle.svelte";
 </script>
 
-<PageTitle title="Politiklandschaft von Schaffhausen" />
+<PageTitle title="Politiklandschaft von Schaffhausen" trackingClasses="">
+    <div class="flex justify-between" slot="below">
+        <div>{moment($selectedDate).format('D')}</div>
+        <div>{moment($selectedDate).format('M')}</div>
+        <div>{moment($selectedDate).format('YYYY')}</div>
+    </div>
+
+    <div slot="title" class="flex justify-between">
+        <!-- Loop over a word an display each letter in a div -->
+        {#each 'Politiklandschaft von Schaffhausen' as letter}
+            <div>{letter}</div>
+        {/each}
+    </div>
+</PageTitle>
+
 
 <div class="mb-8">
     <p class="mb-4">Auf dieser Website finden sie Informationen zu den Mandatsträgerinnen und Trägern der Kommunal Ebene in der Exekutive und Legislative im Kanton Schaffhausen. Die Daten sind von den Websiten der Gemeinden und werden hier gebündelt in dieser <a href="/Data/Daten_{$selectedDate}.xlsx" target="_blank">Excel Datei</a>.</p>
