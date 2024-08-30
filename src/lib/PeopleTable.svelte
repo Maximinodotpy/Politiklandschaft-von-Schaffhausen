@@ -9,6 +9,7 @@
         TableHeadCell,
         TableSearch
     } from 'flowbite-svelte';
+    import { exportAsCSV } from "./helpers";
 
     export let data: PersonData[];
     export let searchTerm: string = '';
@@ -32,16 +33,7 @@
     }
 
     function downloadAsCSV() {
-        let csv = data.map(row => Object.values(row).join(";")).join("\n");
-        // Add header row
-        csv = Object.keys(data[0]).join(";") + "\n" + csv;
-        const blob = new Blob([csv], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${tableName}.csv`;
-        a.click();
-        window.URL.revokeObjectURL(url);
+        exportAsCSV(data, tableName);
     }
 
     function downloadAsJSON() {

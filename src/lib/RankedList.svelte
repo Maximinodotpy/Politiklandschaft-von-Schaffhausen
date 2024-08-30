@@ -1,21 +1,12 @@
 <script lang="ts">
+    import { exportAsCSV } from "./helpers";
+
     export let data: Array<[string, number]>
 
     export let name: string = ""
 
     function downloadAsCSV() {
-        let csv = "data:text/csv;charset=utf-8,"
-
-        data.forEach(([name, count]) => {
-            csv += `${name},${count}\n`
-        })
-
-        let encodedUri = encodeURI(csv)
-        let link = document.createElement("a")
-        link.setAttribute("href", encodedUri)
-        link.setAttribute("download", `${name}.csv`)
-        document.body.appendChild(link)
-        link.click()
+        exportAsCSV(data, name)
     }
 
     function downloadAsJSON() { 
