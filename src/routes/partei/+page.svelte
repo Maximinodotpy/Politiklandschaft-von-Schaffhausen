@@ -1,7 +1,6 @@
 <script lang="ts">
     // Get the name of the gemeinde which is in the url
     import { page } from "$app/stores";
-    import  { base } from '$app/paths';
     import {
         allPeopleGroupedByParty,
         partiesMatchedWithWhereTheyAreRepresentedLegaslitativaly,
@@ -46,7 +45,7 @@
             <PeopleTable data={thisParty} hideParty={true} tableName={partyName} />
         </div>
     
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid md:grid-cols-2 gap-4">
             <div class="mb-20">
                 <h2 class="tracking-widest text-2xl mb-4">Vertreten in Folgenden Exekutiven</h2>
             

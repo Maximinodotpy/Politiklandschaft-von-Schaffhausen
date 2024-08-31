@@ -9,7 +9,6 @@
     import PageTitle from "$lib/PageTitle.svelte";
     import ListTitle from "$lib/ListTitle.svelte";
     import ColumnChart from "$lib/ColumnChart.svelte";
-    import PeopleTable from "$lib/PeopleTable.svelte";
     import RankedList from "$lib/RankedList.svelte";
 
     let menColor = "#03FAFF";
@@ -98,21 +97,26 @@
         acc[name] = count
         return acc
     }, {})
-
-    console.log(Object.entries(zehnHaeufigsteVornamen).sort((a, b) => {
-        return b[1] - a[1]
-    }), 'hel');
     
     let zehnHaeufigsteVornamenSortiert = Object.entries(zehnHaeufigsteVornamen).sort((a, b) => {return b[1] - a[1]})
 
-    console.log(zehnHaeufigsteVornamen, 'gas');
-    console.log(gemeindenWoEinVornameMehrAlsEinmalVorkommt, 'fas');
+    // Gemeinde wo es mehr Frauen als Männer gibt
+    let gemeindenWoEsMehrFrauenAlsMännerGibt = $exikutivenlistData.filter(exekutive => {
+        let people = $globalData[exekutive].people
+
+        let women = people.filter(person => person.gender == "F").length
+        let men = people.filter(person => person.gender == "M").length
+
+        return women > men
+    })
+
+
+
 </script>
 
 <PageTitle title="Analyse" />
 
-<!-- Exekutiven die nur aus Männern oder Frauen bestehen -->
-<div class="grid md:grid-cols-3 gap-8">
+<div class="md:grid flex flex-col md:grid-cols-2 lg:grid-cols-3 gap-8">
     <div class="bg-neutral-50 px-8 py-4 border">
         <ListTitle title="Exekutiven mit nur Männern" />
         <GroupList groups={exekutivenMitNurMännern} />
@@ -162,6 +166,11 @@
                 data: anzahlMännerProPartei,
             },
         ]} />
+    </div>
+
+    <div class="bg-neutral-50 px-8 py-4 border">
+        <ListTitle title="Gemeinderäte wo es mehr Frauen als Männer gibt" />
+        <GroupList groups={gemeindenWoEsMehrFrauenAlsMännerGibt} />
     </div>
 </div>
 

@@ -29,11 +29,14 @@
         <div>{moment($selectedDate).format('YYYY')}</div>
     </div>
 
-    <div slot="title" class="flex justify-between">
-        <!-- Loop over a word an display each letter in a div -->
-        {#each 'Politiklandschaft von Schaffhausen' as letter}
-            <div>{letter}</div>
-        {/each}
+    <div slot="title">
+        <div class="justify-between hidden md:flex">
+            <!-- Loop over a word an display each letter in a div -->
+            {#each 'Politiklandschaft von Schaffhausen' as letter}
+                <div>{letter}</div>
+            {/each}
+        </div>
+        <div class="md:hidden">Politiklandschaft von Schaffhausen</div>
     </div>
 </PageTitle>
 
@@ -43,7 +46,7 @@
     <div>
         <p class="mb-2">Notizen zu den Daten</p>
 
-        <ul class="list-disc list-inside">
+        <ul class="list-disc list-outside ml-5">
             <li>Stichtag der Daten ist der { moment($selectedDate).format('DD. MMMM YYYY') }. Man kann aber oben rechts auch einen anderen Tag auswählen.</li>
             <li>Die Bilder wurden nur entnommen wenn sie nicht als <a href="https://de.wikipedia.org/wiki/Data-URL" target="_blank">Data URL</a> eingebettet waren.</li>
             <li>Die Daten entstammen den Websiten der Gemeinden und es wurde nur das Geschlecht der jeweiligen Personen anhand vom Namen und/oder dem Bild angenommen. Falls keine Partei genannt wurde, findet man diese Info auch nicht hier.</li>
@@ -110,7 +113,7 @@
 <div class="mt-20 mb-80">
     <h3 class="text-xl tracking-widest mb-8">Informationsstatus</h3>
 
-    <Table divClass="border">
+    <Table divClass="border" striped={true}>
         <TableHead>
             <TableHeadCell>Was</TableHeadCell>
             <TableHeadCell>Wie viel</TableHeadCell>

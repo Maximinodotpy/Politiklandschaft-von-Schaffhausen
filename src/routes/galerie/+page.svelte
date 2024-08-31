@@ -7,7 +7,7 @@
 
 <PageTitle title="Galerie" />
 
-<div class="grid grid-cols-3 md:grid-cols-6 gap-4">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
     {#each pictures as person}
         <div class="aspect-square relative rounded-lg overflow-hidden border bg-neutral-100">
             <img src={person.image} alt="{person.firstname} {person.lastname}" class="object-cover h-full w-full" />

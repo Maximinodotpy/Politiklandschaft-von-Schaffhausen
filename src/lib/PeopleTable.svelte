@@ -48,10 +48,10 @@
     }
 </script>
 
-<TableSearch placeholder="Suchen" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }">
+<TableSearch placeholder="Suchen" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }" striped={true}>
     <caption class="px-5 pb-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
         Zu dieser Tabelle
-        <div class="grid grid-cols-2">
+        <div class="flex md:justify-between flex-col md:flex-row">
             <div class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
                 <ul class="grid md:grid-cols-6 grid-cols-3">
                     <li>{femaleToMaleRatio.male} Männer</li>
@@ -60,13 +60,8 @@
                 </ul>
             </div>
             <div class="flex gap-3 items-center">
-                Herunterladen als
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" on:click={downloadAsCSV}>
-                    CSV
-                </button>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" on:click={downloadAsJSON}>
-                    JSON
-                </button>
+                <button on:click={downloadAsCSV} class="opacity-50 hover:opacity-100 transition-all">CSV</button>
+                <button on:click={downloadAsJSON} class="opacity-50 hover:opacity-100 transition-all">JSON</button>
             </div>
         </div>
     </caption>
