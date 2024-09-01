@@ -11,6 +11,7 @@
     } from 'flowbite-svelte';
     import { exportAsCSV } from "./helpers";
     import { partyToColor } from "./helpers";
+    import moment from "moment";
 
     export let data: PersonData[];
     export let searchTerm: string = '';
@@ -57,6 +58,8 @@
 
     let people_born_after_2000 = data.filter(person => (person.birthyear || 0) > 2000);
     let people_born_before_1950 = data.filter(person => (person.birthyear || Infinity) < 1950);
+
+    let average_age = Math.round(data.reduce((acc, person) => acc + (moment().year() - (person.birthyear || 0)), 0) / data.length);
 </script>
 
 <TableSearch placeholder="Suchen" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }" striped={true}>
@@ -75,6 +78,7 @@
                 <div class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400 grid gap-2">
                     <div><b>Ältester</b> {oldest_person.firstname} {oldest_person.lastname} (Jg. {oldest_person.birthyear})</div>
                     <div><b>Jüngster</b> {youngest_person.firstname} {youngest_person.lastname} (Jg. {youngest_person.birthyear})</div>
+                    <div><b>Durchschnittsalter</b> {average_age} Jahre</div>
                     
                     <div>
                         <b>Personen die nach 2000 geboren sind ({people_born_after_2000.length})</b>
