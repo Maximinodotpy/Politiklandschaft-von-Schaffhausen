@@ -74,7 +74,7 @@
     // Durschnittliche Amtszeit
     let average_since = Math.round(data.reduce((acc, person) => acc + (moment().year() - (person.since || 0)), 0) / data.length);
 
-
+    
 </script>
 
 <TableSearch placeholder="Suchen" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }" striped={true} svgClass="hidden" inputClass="w-full p-2 border rounded-md">
