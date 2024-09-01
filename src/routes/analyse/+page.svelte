@@ -10,6 +10,15 @@
     import ListTitle from "$lib/ListTitle.svelte";
     import ColumnChart from "$lib/ColumnChart.svelte";
     import RankedList from "$lib/RankedList.svelte";
+    import Card from "$lib/Card.svelte";
+    import AnalyseGruppe from "./AnalyseGruppe.svelte";
+    import ExportableTable from "$lib/ExportableTable.svelte";
+    import { chapters } from "./chapters";
+
+    chapters.update((chapters) => {
+        chapters = []
+        return chapters;
+    });
 
     let menColor = "#03FAFF";
     let womenColor = "#E503FF";
@@ -116,43 +125,23 @@
 
 <PageTitle title="Analyse" />
 
-<div class="md:grid flex flex-col md:grid-cols-2 lg:grid-cols-3 gap-8">
-    <div class="bg-neutral-50 px-8 py-4 border">
+<AnalyseGruppe title="Geschlechter">
+    <Card>
         <ListTitle title="Exekutiven mit nur Männern" />
         <GroupList groups={exekutivenMitNurMännern} />
-    </div>
+    </Card>
     
-    <div class="bg-neutral-50 px-8 py-4 border">
+    <Card>
         <ListTitle title="Exekutiven mit nur Frauen" />
         <GroupList groups={exekutivenMitNurFrauen} />
-    </div>
+    </Card>
 
-    <div class="bg-neutral-50 px-8 py-4 border">
-        <ListTitle title="Exekutiven mit einer geraden Anzahl Rätinnen und Räten" />
-        <GroupList groups={exekutivenMitGeraderAnzahlRätinnenUndRäten} />
-    </div>
+    <Card>
+        <ListTitle title="Gemeinderäte wo es mehr Frauen als Männer gibt" />
+        <GroupList groups={gemeindenWoEsMehrFrauenAlsMännerGibt} />
+    </Card>
 
-    <div class="bg-neutral-50 px-8 py-4 border">
-        <ListTitle title="Exekutiven wo es mehrere Menschen mit dem gleichen Vornamen hat" />
-        <GroupList groups={gemeindenWoEinVornameMehrAlsEinmalVorkommt} />
-    </div>
-
-    <div class="bg-neutral-50 px-8 py-4 border">
-        <ListTitle title="Exekutiven wo es mehrere Menschen mit dem gleichen Nachnamen hat" />
-        <GroupList groups={gemeindenWoEinNachnameMehrAlsEinmalVorkommt} />
-    </div>
-
-    <div class="bg-neutral-50 px-8 py-4 border">
-        <ListTitle title="Häufigste Vornamen" />
-        <RankedList data={zehnHaeufigsteVornamenSortiert} name="Häufigste Vornamen" />
-    </div>
-
-    <div class="bg-neutral-50 px-8 py-4 border">
-        <ListTitle title="Parteienranking nach Anzahl Mandaten" />
-        <RankedList data={parteinSortiertNachAnzahlPersonen} name="Parteienranking nach Anzahl Mandaten" />
-    </div>
-
-    <div class="bg-neutral-50 px-8 py-4 border col-span-2">
+    <Card extra_classes="col-span-2">
         <ListTitle title="Parteienmandate mit Frau/Mann Anteile aufgeteilt nach Partei" />
         <ColumnChart data={[
             {
@@ -166,11 +155,68 @@
                 data: anzahlMännerProPartei,
             },
         ]} />
-    </div>
+    </Card>
+</AnalyseGruppe>
 
-    <div class="bg-neutral-50 px-8 py-4 border">
-        <ListTitle title="Gemeinderäte wo es mehr Frauen als Männer gibt" />
-        <GroupList groups={gemeindenWoEsMehrFrauenAlsMännerGibt} />
-    </div>
+<AnalyseGruppe title="Namen">
+    <Card>
+        <ListTitle title="Exekutiven wo es mehrere Menschen mit dem gleichen Vornamen hat" />
+        <GroupList groups={gemeindenWoEinVornameMehrAlsEinmalVorkommt} />
+    </Card>
+
+    <Card>
+        <ListTitle title="Exekutiven wo es mehrere Menschen mit dem gleichen Nachnamen hat" />
+        <GroupList groups={gemeindenWoEinNachnameMehrAlsEinmalVorkommt} />
+    </Card>
+
+    <Card>
+        <ListTitle title="Häufigste Vornamen" />
+        <RankedList data={zehnHaeufigsteVornamenSortiert} name="Häufigste Vornamen" />
+    </Card>
+</AnalyseGruppe>
+
+<AnalyseGruppe title="Parteien">
+    <Card>
+        <ListTitle title="Parteienranking nach Anzahl Mandaten" />
+        <RankedList data={parteinSortiertNachAnzahlPersonen} name="Parteienranking nach Anzahl Mandaten" />
+    </Card>
+</AnalyseGruppe>
+
+<AnalyseGruppe title="Sonstiges">
+    <Card>
+        <ListTitle title="Exekutiven mit einer geraden Anzahl Rätinnen und Räten" />
+        <GroupList groups={exekutivenMitGeraderAnzahlRätinnenUndRäten} />
+    </Card>
+</AnalyseGruppe>
+
+<AnalyseGruppe title="Informationsstatus">
+    <ExportableTable slot="normal" name="Informationsstatus" data={[
+        {
+            "Was": "Parteien",
+            "Wie viel": `${$allPeople.filter(person => person.party).length} von ${$allPeople.length}`,
+            "%": `${($allPeople.filter(person => person.party).length / $allPeople.length * 100).toFixed(2)}%`
+        },
+        {
+            "Was": "Geburtsjahre",
+            "Wie viel": `${$allPeople.filter(person => person.birthyear).length} von ${$allPeople.length}`,
+            "%": `${($allPeople.filter(person => person.birthyear).length / $allPeople.length * 100).toFixed(2)}%`
+        },
+        {
+            "Was": "Seit Angaben",
+            "Wie viel": `${$allPeople.filter(person => person.since).length} von ${$allPeople.length}`,
+            "%": `${($allPeople.filter(person => person.since).length / $allPeople.length * 100).toFixed(2)}%`
+        },
+        {
+            "Was": "Geschlechts Angaben",
+            "Wie viel": `${$allPeople.filter(person => person.gender).length} von ${$allPeople.length}`,
+            "%": `${($allPeople.filter(person => person.gender).length / $allPeople.length * 100).toFixed(2)}%`
+        },
+    ]}
+    />
+</AnalyseGruppe>
+
+<div class="fixed bottom-0 w-full md:flex bg-white border-t left-0 hidden">
+    {#each $chapters as chapter}
+        <a href={`#${chapter}`} class="grow p-4 no-underline transition-all hover:bg-neutral-100 text-center">{chapter}</a>
+    {/each}
 </div>
-
