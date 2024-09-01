@@ -49,6 +49,7 @@
     }
 
 
+    // Geburtstags-Statistiken
     let all_birthyears_are_known = data.every(person => {
         return person.birthyear != null;
     });
@@ -60,57 +61,82 @@
     let people_born_before_1950 = data.filter(person => (person.birthyear || Infinity) < 1950);
 
     let average_age = Math.round(data.reduce((acc, person) => acc + (moment().year() - (person.birthyear || 0)), 0) / data.length);
+
+    let retirement_age = 67;
+
+    let retirement_age_reached = data.filter(person => (person.birthyear || 0) + retirement_age <= moment().year());
+
+    // Amtszeit-Statistiken
+    let all_start_years_are_known = data.every(person => {
+        return person.since != null;
+    });
+
+    // Durschnittliche Amtszeit
+    let average_since = Math.round(data.reduce((acc, person) => acc + (moment().year() - (person.since || 0)), 0) / data.length);
+
+
 </script>
 
-<TableSearch placeholder="Suchen" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }" striped={true}>
-    <caption class="px-5 pb-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-        Zu dieser Tabelle
-        <div class="grid md:grid-cols-2">
-            <div class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
-                <ul class="grid grid-cols-3">
-                    <li>{femaleToMaleRatio.male} Männer</li>
-                    <li>{femaleToMaleRatio.female} Frauen</li>
-                    <li>{Math.round(femaleToMaleRatio.female/femaleToMaleRatio.count*100)}% Frauen</li>
-                </ul>
-            </div>
+<TableSearch placeholder="Suchen" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }" striped={true} svgClass="hidden" inputClass="w-full p-2 border rounded-md">
+    <caption class="px-5 pb-5 text-left">
+        <div class="text-lg font-semibold text-left text-gray-900 bg-white mb-4">Zu dieser Tabelle</div>
+
+        <div class="grid lg:grid-cols-3 text-sm font-normal text-gray-500 dark:text-gray-400 gap-5">
+            <div><b>{femaleToMaleRatio.male}</b> Männer</div>
+            <div><b>{femaleToMaleRatio.female}</b> Frauen</div>
+            <div><b>{Math.round(femaleToMaleRatio.female/femaleToMaleRatio.count*100)}%</b> Frauen</div>
 
             {#if all_birthyears_are_known}
-                <div class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400 grid gap-2">
-                    <div><b>Ältester</b> {oldest_person.firstname} {oldest_person.lastname} (Jg. {oldest_person.birthyear})</div>
-                    <div><b>Jüngster</b> {youngest_person.firstname} {youngest_person.lastname} (Jg. {youngest_person.birthyear})</div>
-                    <div><b>Durchschnittsalter</b> {average_age} Jahre</div>
-                    
-                    <div>
-                        <b>Personen die nach 2000 geboren sind ({people_born_after_2000.length})</b>
-    
-                        {#if people_born_after_2000.length > 0}
-                            <ul class="list-disc list-outside ml-5">
-                                {#each people_born_after_2000 as person}
-                                    <li>{person.firstname} {person.lastname} (Jg. {person.birthyear})</li>
-                                {/each}
-                            </ul>
-                        {/if}
-                    </div>
+                <div><b>Ältester</b> {oldest_person.firstname} {oldest_person.lastname} (Jg. {oldest_person.birthyear})</div>
+                <div><b>Jüngster</b> {youngest_person.firstname} {youngest_person.lastname} (Jg. {youngest_person.birthyear})</div>
+                <div><b>Durchschnittsalter</b> {average_age} Jahre</div>
+                
+                <div>
+                    <b>Personen die nach 2000 geboren sind ({people_born_after_2000.length})</b>
 
-                    <div>
-                        <b>Personen die vor 1950 geboren sind ({people_born_before_1950.length})</b>
-    
-                        {#if people_born_before_1950.length > 0}
-                            <ul class="list-disc list-outside ml-5">
-                                {#each people_born_before_1950 as person}
-                                    <li>{person.firstname} {person.lastname} (Jg. {person.birthyear})</li>
-                                {/each}
-                            </ul>
-                        {/if}
-                    </div>
+                    {#if people_born_after_2000.length > 0}
+                        <ul class="list-disc list-outside ml-5">
+                            {#each people_born_after_2000 as person}
+                                <li>{person.firstname} {person.lastname} (Jg. {person.birthyear})</li>
+                            {/each}
+                        </ul>
+                    {/if}
                 </div>
+
+                <div>
+                    <b>Personen die vor 1950 geboren sind ({people_born_before_1950.length})</b>
+
+                    {#if people_born_before_1950.length > 0}
+                        <ul class="list-disc list-outside ml-5">
+                            {#each people_born_before_1950 as person}
+                                <li>{person.firstname} {person.lastname} (Jg. {person.birthyear})</li>
+                            {/each}
+                        </ul>
+                    {/if}
+                </div>
+
+                <div>
+                    <b>Personen die das Rentenalter ({retirement_age}) erreicht haben ({retirement_age_reached.length})</b>
+
+                    {#if retirement_age_reached.length > 0}
+                        <ul class="list-disc list-outside ml-5">
+                            {#each retirement_age_reached as person}
+                                <li>{person.firstname} {person.lastname} (Jg. {person.birthyear})</li>
+                            {/each}
+                        </ul>
+                    {/if}
+                </div>
+            {/if}
+
+            {#if all_start_years_are_known}
+                <div><b>Durchschnittliche Amtszeit</b> {average_since} Jahre</div>
             {/if}
         </div>
     </caption>
     <TableHead>
-        <TableHeadCell>Vorname</TableHeadCell>
-        <TableHeadCell>Nachname</TableHeadCell>
-        <TableHeadCell class="{hideParty ? 'hidden': ''}">Partei</TableHeadCell>
+        <TableHeadCell class="p-2 md:p-4">Vorname</TableHeadCell>
+        <TableHeadCell class="p-2 md:p-4">Nachname</TableHeadCell>
+        <TableHeadCell class="{hideParty ? 'hidden': ''} p-2 md:p-4">Partei</TableHeadCell>
         <TableHeadCell class="hidden md:table-cell">Geburtsjahr</TableHeadCell>
         <TableHeadCell class="hidden md:table-cell">Aufgaben</TableHeadCell>
         <TableHeadCell class="hidden md:table-cell">Seit</TableHeadCell>
@@ -120,9 +146,9 @@
     <TableBody>
         {#each filteredData as person}
             <TableBodyRow>
-                <TableBodyCell>{person.firstname ?? ''}</TableBodyCell>
-                <TableBodyCell>{person.lastname ?? ''}</TableBodyCell>
-                <TableBodyCell class="{hideParty ? 'hidden': ''}">
+                <TableBodyCell tdClass="p-2 md:p-4">{person.firstname ?? ''}</TableBodyCell>
+                <TableBodyCell tdClass="p-2 md:p-4">{person.lastname ?? ''}</TableBodyCell>
+                <TableBodyCell class="{hideParty ? 'hidden': ''}" tdClass="p-2 md:p-4">
                     <a href="{base}/partei?p={person.party}">{person.party ?? ''}</a>
                 </TableBodyCell>
                 <TableBodyCell class="hidden md:table-cell">{person.birthyear ?? ''}</TableBodyCell>
