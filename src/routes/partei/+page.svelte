@@ -10,8 +10,8 @@
 
     } from "$lib/index";
     import PeopleTable from "$lib/PeopleTable.svelte";
-    import CommunityList from "$lib/CommunityList.svelte";
     import PageTitle from "$lib/PageTitle.svelte";
+    import GroupList from "$lib/GroupList.svelte";
 
     let partyName = $page.url.searchParams.get("p") as string;
 
@@ -49,13 +49,13 @@
             <div class="mb-20">
                 <h2 class="tracking-widest text-2xl mb-4">Vertreten in Folgenden Exekutiven</h2>
             
-                <CommunityList communities={$partiesMatchedWithWhereTheyAreRepresentedExekutivaly[partyName]} />
+                <GroupList groups={$partiesMatchedWithWhereTheyAreRepresentedExekutivaly[partyName]} />
             </div>
             
             <div class="mb-20">
                 <h2 class="tracking-widest text-2xl mb-4">Vertreten in Folgenden Legislativen</h2>
             
-                <CommunityList communities={$partiesMatchedWithWhereTheyAreRepresentedLegaslitativaly[partyName]} />
+                <GroupList groups={$partiesMatchedWithWhereTheyAreRepresentedLegaslitativaly[partyName]} />
             </div>
         </div>
     {/if}
