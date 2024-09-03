@@ -7,8 +7,6 @@
         chapters.push(title);
         return chapters;
     });
-
-    console.log('KOL:', title);
 </script>
 
 <div class="mb-10" id="{title}">

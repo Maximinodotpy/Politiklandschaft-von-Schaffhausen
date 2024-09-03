@@ -120,7 +120,20 @@
     })
 
 
+    // Personen die mehrere male vorkommen / mehrere Mandate haben
+    let peopleWithMultipleMandates = $allPeople.filter(person => {
+        let people = $allPeople.filter(p => p.firstname == person.firstname && p.lastname == person.lastname)
+        return people.length > 1
+    })
 
+    // Merge single people with multiple mandates
+    peopleWithMultipleMandates = peopleWithMultipleMandates.reduce((acc, person) => {
+        let people = $allPeople.filter(p => p.firstname == person.firstname && p.lastname == person.lastname)
+        acc.push(people)
+        return acc
+    }, [])
+
+    console.log('Hallo', peopleWithMultipleMandates);
 </script>
 
 <PageTitle title="Analyse" />
@@ -184,8 +197,23 @@
 
 <AnalyseGruppe title="Sonstiges">
     <Card>
-        <ListTitle title="Exekutiven mit einer geraden Anzahl Rätinnen und Räten" />
+        <ListTitle title="Exekutiven mit einer geraden Anzahl Rätinnen und Räten ({exekutivenMitGeraderAnzahlRätinnenUndRäten.length})" />
         <GroupList groups={exekutivenMitGeraderAnzahlRätinnenUndRäten} />
+    </Card>
+    <Card extra_classes="col-span-2">
+        <ListTitle title="Personen die mehrere male vorkommen (Mögliche mehrfach Mandate) ({peopleWithMultipleMandates.length})" />
+        <div class="grid md:grid-cols-2 gap-4">
+            {#each peopleWithMultipleMandates as people}
+                <div>
+                    <div>{ people[0].firstname } {people[0].lastname}</div>
+
+
+                    <div class="pl-4 opacity-50">
+                        <GroupList groups={people.map(p => p.GroupName)} />
+                    </div>
+                </div>
+            {/each}
+        </div>
     </Card>
 </AnalyseGruppe>
 

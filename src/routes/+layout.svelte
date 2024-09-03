@@ -19,22 +19,22 @@
     
     async function loadDataFromDay(day: string) {
         globalData.set({});
-        console.log($page.url.origin);
+        /* console.log($page.url.origin); */
         
         const url = `${base}\\Data\\Daten_${day}.xlsx`;
-        console.log("Loading data from", url);
+        /* console.log("Loading data from", url); */
         
         const file = await fetch(url);
-        console.log("File", file);
+        /* console.log("File", file); */
         
         const array_buffer = await file.arrayBuffer();
-        console.log("File", array_buffer);
+        /* console.log("File", array_buffer); */
     
         // @ts-ignore
         const workbook = XLSX.read(array_buffer);
     
-        console.log("Workbook", workbook);
-        console.log("Sheet names", workbook.SheetNames);
+        /* console.log("Workbook", workbook);
+        console.log("Sheet names", workbook.SheetNames); */
     
         // Fill in data
         workbook.SheetNames.forEach((sheetName: string) => {
@@ -50,7 +50,7 @@
                 header: 1
             }) as string[][];
 
-            console.log("Sheet", sheet);
+            /* console.log("Sheet", sheet); */
     
             let new_data: GroupData = {
                 name: sheetName,
@@ -78,6 +78,7 @@
                     image: row[6],
                     gender: row[7],
                     email: row[8],
+                    GroupName: sheetName,
                 });
             }
     

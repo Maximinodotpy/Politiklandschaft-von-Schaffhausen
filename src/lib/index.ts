@@ -12,6 +12,7 @@ export interface PersonData {
     tasks: string;
     gender: string;
     email: string;
+    GroupName?: string;
 }
 
 export interface GroupData {
