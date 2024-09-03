@@ -201,7 +201,7 @@
         <GroupList groups={exekutivenMitGeraderAnzahlRätinnenUndRäten} />
     </Card>
     <Card extra_classes="col-span-2">
-        <ListTitle title="Personen die mehrere male vorkommen (Mögliche mehrfach Mandate) ({peopleWithMultipleMandates.length})" />
+        <ListTitle title="Personen die mehrere male vorkommen (Mögliche Mehrfachmandate) ({peopleWithMultipleMandates.length})" />
         <div class="grid md:grid-cols-2 gap-4">
             {#each peopleWithMultipleMandates as people}
                 <div>

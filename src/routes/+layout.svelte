@@ -128,4 +128,8 @@
 
 <div class="p-4 mx-auto max-w-5xl">
     <slot></slot>
+    
+    <div class="text-right pb-8">
+        Programmiert von <a href="mailto:info@maximmaeder.com">Maxim Mäder</a>
+    </div>
 </div>

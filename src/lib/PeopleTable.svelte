@@ -28,8 +28,13 @@
         let male = data.filter(person => person.gender == 'M').length
         let female = data.filter(person => person.gender == 'F').length
 
+        let male_percent = Math.round(male / data.length * 100);
+        let female_percent = Math.round(female / data.length * 100);
+
         return {
-            male, female, ratio: female/male, count: data.length
+            male, female, ratio: female/male, count: data.length,
+            male_percent,
+            female_percent,
         }
     }
 
@@ -66,6 +71,8 @@
 
     let retirement_age_reached = data.filter(person => (person.birthyear || 0) + retirement_age <= moment().year());
 
+    let number_of_people_older_than_60 = data.filter(person => (person.birthyear || 0) + 60 <= moment().year()).length;
+
     // Amtszeit-Statistiken
     let all_start_years_are_known = data.every(person => {
         return person.since != null;
@@ -82,9 +89,8 @@
         <div class="text-lg font-semibold text-left text-gray-900 bg-white mb-4">Zu dieser Tabelle</div>
 
         <div class="grid lg:grid-cols-3 text-sm font-normal text-gray-500 dark:text-gray-400 gap-5">
-            <div><b>{femaleToMaleRatio.male}</b> Männer</div>
-            <div><b>{femaleToMaleRatio.female}</b> Frauen</div>
-            <div><b>{Math.round(femaleToMaleRatio.female/femaleToMaleRatio.count*100)}%</b> Frauen</div>
+            <div><b>{femaleToMaleRatio.male}</b> Männer ({femaleToMaleRatio.male_percent}%)</div>
+            <div><b>{femaleToMaleRatio.female}</b> Frauen ({femaleToMaleRatio.female_percent}%)</div>
 
             {#if all_birthyears_are_known}
                 <div><b>Ältester</b> {oldest_person.firstname} {oldest_person.lastname} (Jg. {oldest_person.birthyear})</div>
@@ -125,6 +131,11 @@
                             {/each}
                         </ul>
                     {/if}
+                </div>
+
+                <div>
+                    <b>{number_of_people_older_than_60}</b>
+                    Personen die mindestens 60 Jahre alt sind 
                 </div>
             {/if}
 
