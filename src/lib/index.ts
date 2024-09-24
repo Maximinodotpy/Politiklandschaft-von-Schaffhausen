@@ -41,7 +41,8 @@ export const dates = Object.keys(files).map((key) => {
     return null;
 })
 
-export const selectedDate = writable(dates[dates.length - 1]);
+// By default the selected date is the last date that is not in the future
+export const selectedDate = writable<string>(dates.filter((date) => date <= new Date().toISOString().split("T")[0]).pop() || dates[0]);
 
 export const globalData = writable<Data>({});
 

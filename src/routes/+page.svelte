@@ -34,14 +34,16 @@
 
 
 <div class="mb-8">
-    <p class="mb-4">Auf dieser Website finden sie Informationen zu den Mandatsträgerinnen und Trägern der Kommunal Ebene in der Exekutive und Legislative im Kanton Schaffhausen. Die Daten sind von den Websiten der Gemeinden und werden hier gebündelt in dieser <a href="/Data/Daten_{$selectedDate}.xlsx" target="_blank">Excel Datei</a>.</p>
+    <p class="mb-4">Auf dieser Website finden sie Informationen zu den Mandatsträgerinnen und Trägern der Kommunal und Kantonal Ebene in der <abbr title="Gemeinderäte und Stadträte">Exekutive</abbr> und <abbr title="Einwohnerräte, Grosser Stadtrat und Kantonsrat">Legislative</abbr> im Kanton Schaffhausen (Ohne Regierungsrat). Die Daten sind von den Websiten der Gemeinden und werden in dieser <a href="/Data/Daten_{$selectedDate}.xlsx" target="_blank">Excel Datei</a> gebündelt.</p>
     <div>
-        <p class="mb-2">Notizen zu den Daten</p>
+        <h2 class="mb-2 font-bold">Notizen zu den Daten</h2>
 
         <ul class="list-disc list-outside ml-5">
-            <li>Stichtag der Daten ist der { moment($selectedDate).format('DD. MMMM YYYY') }. Man kann aber oben rechts auch einen anderen Tag auswählen.</li>
-            <li>Die Bilder wurden nur entnommen wenn sie nicht als <a href="https://de.wikipedia.org/wiki/Data-URL" target="_blank">Data URL</a> eingebettet waren.</li>
-            <li>Die Daten entstammen den Websiten der Gemeinden und es wurde nur das Geschlecht der jeweiligen Personen anhand vom Namen und/oder dem Bild angenommen. Falls keine Partei genannt wurde, findet man diese Info auch nicht hier.</li>
+            <li>Stichtag der Daten ist der { moment($selectedDate).format('D. MMMM YYYY') }. Man kann aber oben rechts auch einen anderen Tag auswählen.</li>
+            <li>Die Bilder wurden nur entnommen, wenn sie nicht als <a href="https://de.wikipedia.org/wiki/Data-URL" target="_blank">Data URL</a> eingebettet waren.</li>
+            <li>Die Daten entstammen den Websiten der Gemeinden. Abgesehen von dem Geschlecht wurden keine Informationen angenommen, also wenn zb. nichts von der Partei stand, wird man diese, obwohl sie eventuell generell bekannt ist, hier nicht finden.</li>
+            <li>Mit "{ $allPeople.length } Personen" meint man eigentlich { $allPeople.length } Personeneinträge, was heisst, dass Personen, die an mehreren Orten vorkommen, auch mehrfach genannt werden.</li>
+            <li>Die Daten wurden/werden von <a href="https://www.instagram.com/maximmaeder/" target="_blank">Maxim Mäder</a> eingetragen und weil er auch nur ein Mensch ist, können Fehler passieren 😊</li>
         </ul>
     </div>
 </div>

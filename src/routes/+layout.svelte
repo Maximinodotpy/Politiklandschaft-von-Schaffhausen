@@ -13,7 +13,7 @@
     let days = dates.map(date => {
         return {
             value: date,
-            name: moment(date).locale("de").format("DD. MMMM YYYY")
+            name: moment(date).locale("de").format("D. MMMM YYYY")
         };
     });
     
