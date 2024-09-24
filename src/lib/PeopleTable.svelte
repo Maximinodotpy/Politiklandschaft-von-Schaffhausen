@@ -18,14 +18,27 @@
     export let hideParty: boolean = false;
     export let hideSearch: boolean = false;
     export let tableName: string = 'Personen';
+
+    let facts_about_found_people = false
     
-    $: femaleToMaleRatio = getFemaletoMaleRatio(data);
     $: filteredData = data.filter(person => {
-        return person.firstname.toLowerCase().includes(searchTerm.toLowerCase())
-            ||
-            person.lastname.toLowerCase().includes(searchTerm.toLowerCase())
-            ||
-            person.party.toLowerCase().includes(searchTerm.toLowerCase())
+        let shouldShow = true;
+
+        if (searchTerm) {
+            // Check if there is something like this Partei:SVP and only search this in the party
+            if (searchTerm.includes('Partei:')) {
+                const party = searchTerm.split(':')[1].trim();
+                shouldShow = person.party.toLowerCase().includes(party.toLowerCase())
+            } else {
+                shouldShow = person.firstname.toLowerCase().includes(searchTerm.toLowerCase())
+                ||
+                person.lastname.toLowerCase().includes(searchTerm.toLowerCase())
+                ||
+                person.party.toLowerCase().includes(searchTerm.toLowerCase())
+            }
+        }
+
+        return shouldShow
     });
 
     function getFemaletoMaleRatio(data: PersonData[]) {
@@ -58,45 +71,60 @@
     }
 
 
+    $: fact_data = facts_about_found_people ? filteredData : data;
+
+
+    $: femaleToMaleRatio = getFemaletoMaleRatio(fact_data);
+
     // Geburtstags-Statistiken
-    let all_birthyears_are_known = data.every(person => {
+    $: all_birthyears_are_known = fact_data.every(person => {
         return person.birthyear != null;
     });
 
-    let youngest_person = data.sort((a, b) => (b.birthyear||0) - (a.birthyear||0))[0];
-    let oldest_person = data.sort((a, b) => (a.birthyear||0) - (b.birthyear||0))[0];
+    $: youngest_person = fact_data.sort((a, b) => (b.birthyear||0) - (a.birthyear||0))[0];
+    $: oldest_person = fact_data.sort((a, b) => (a.birthyear||0) - (b.birthyear||0))[0];
 
-    let people_born_after_2000 = data.filter(person => (person.birthyear || 0) > 2000);
-    let people_born_before_1950 = data.filter(person => (person.birthyear || Infinity) < 1950);
+    $: people_born_after_2000 = fact_data.filter(person => (person.birthyear || 0) > 2000);
+    $: people_born_before_1950 = fact_data.filter(person => (person.birthyear || Infinity) < 1950);
 
-    let average_age = Math.round(data.reduce((acc, person) => acc + (moment().year() - (person.birthyear || 0)), 0) / data.length);
+    $: average_age = Math.round(fact_data.reduce((acc, person) => acc + (moment().year() - (person.birthyear || 0)), 0) / fact_data.length);
 
-    let retirement_age = 67;
+    $: retirement_age = 67;
 
-    let retirement_age_reached = data.filter(person => (person.birthyear || 0) + retirement_age <= moment().year());
+    $: retirement_age_reached = fact_data.filter(person => (person.birthyear || 0) + retirement_age <= moment().year());
 
-    let number_of_people_older_than_60 = data.filter(person => (person.birthyear || 0) + 60 <= moment().year()).length;
+    $: number_of_people_older_than_60 = fact_data.filter(person => (person.birthyear || 0) + 60 <= moment().year()).length;
 
     // Amtszeit-Statistiken
-    let all_start_years_are_known = data.every(person => {
+    $: all_start_years_are_known = fact_data.every(person => {
         return person.since != null;
     });
 
     // Durschnittliche Amtszeit
-    let average_since = Math.round(data.reduce((acc, person) => acc + (moment().year() - (person.since || 0)), 0) / data.length);
+    $: average_since = Math.round(fact_data.reduce((acc, person) => acc + (moment().year() - (person.since || 0)), 0) / data.length);
 </script>
 
-<TableSearch placeholder="Suchen (Vorname, Nachname, Partei)" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }" striped={true} svgClass="hidden" inputClass="w-full p-2 border rounded-md">
+<TableSearch placeholder="Suchen (Vorname, Nachname, Partei oder Partei:[Partei Name])" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }" striped={true} svgClass="hidden" inputClass="w-full p-2 border rounded-md">
     <caption class="px-5 pb-5 text-left">
-        <div class="text-lg font-semibold text-left text-gray-900 bg-white mb-4">Zu dieser Tabelle</div>
+        <div class="text-left text-gray-900 bg-white mb-4">
+            <div class="text-lg font-semibold">
+                Zu dieser Tabelle
+            </div>
+            (<label for="facts_about_found_people" class="inline-flex items-center gap-1">
+                    Anhand von Suche
+                    <input type="checkbox" name="" id="facts_about_found_people" bind:checked={facts_about_found_people}>
+                </label>)
+        </div>
 
         <div class="grid lg:grid-cols-3 text-sm font-normal text-gray-500 dark:text-gray-400 gap-5">
             <div><b>{femaleToMaleRatio.male}</b> Männer ({femaleToMaleRatio.male_percent}%)</div>
             <div><b>{femaleToMaleRatio.female}</b> Frauen ({femaleToMaleRatio.female_percent}%)</div>
 
             {#if all_birthyears_are_known}
-                <div><b>Ältester</b> {oldest_person.firstname} {oldest_person.lastname} (Jg. {oldest_person.birthyear})</div>
-                <div><b>Jüngster</b> {youngest_person.firstname} {youngest_person.lastname} (Jg. {youngest_person.birthyear})</div>
+                {#if oldest_person && youngest_person}
+                    <div><b>Ältester</b> {oldest_person?.firstname} {oldest_person?.lastname} (Jg. {oldest_person.birthyear})</div>
+                    <div><b>Jüngster</b> {youngest_person?.firstname} {youngest_person?.lastname} (Jg. {youngest_person.birthyear})</div>
+                {/if}
                 <div><b>Durchschnittsalter</b> {average_age} Jahre</div>
                 
                 <div>
