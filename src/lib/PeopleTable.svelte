@@ -21,7 +21,11 @@
     
     $: femaleToMaleRatio = getFemaletoMaleRatio(data);
     $: filteredData = data.filter(person => {
-        return person.firstname.toLowerCase().includes(searchTerm.toLowerCase()) || person.lastname.toLowerCase().includes(searchTerm.toLowerCase());
+        return person.firstname.toLowerCase().includes(searchTerm.toLowerCase())
+            ||
+            person.lastname.toLowerCase().includes(searchTerm.toLowerCase())
+            ||
+            person.party.toLowerCase().includes(searchTerm.toLowerCase())
     });
 
     function getFemaletoMaleRatio(data: PersonData[]) {
@@ -80,11 +84,9 @@
 
     // Durschnittliche Amtszeit
     let average_since = Math.round(data.reduce((acc, person) => acc + (moment().year() - (person.since || 0)), 0) / data.length);
-
-    
 </script>
 
-<TableSearch placeholder="Suchen" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }" striped={true} svgClass="hidden" inputClass="w-full p-2 border rounded-md">
+<TableSearch placeholder="Suchen (Vorname, Nachname, Partei)" hoverable={true} bind:inputValue={searchTerm} divClass="border" searchClass="{ hideSearch ? 'hidden': '' }" striped={true} svgClass="hidden" inputClass="w-full p-2 border rounded-md">
     <caption class="px-5 pb-5 text-left">
         <div class="text-lg font-semibold text-left text-gray-900 bg-white mb-4">Zu dieser Tabelle</div>
 
